@@ -1,9 +1,5 @@
 const OpenAI = require('openai');
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 exports.handler = async (event, context) => {
   // Enable CORS
   const headers = {
@@ -25,6 +21,19 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Validate API key
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('Missing OpenAI API key');
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ 
+          error: 'Server configuration error',
+          details: 'Missing OpenAI API key'
+        }),
+      };
+    }
+
     const { templeName } = JSON.parse(event.body);
 
     if (!templeName) {
@@ -34,6 +43,10 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ error: 'Temple name is required' }),
       };
     }
+
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -61,7 +74,10 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Failed to generate script', details: error.message }),
+      body: JSON.stringify({ 
+        error: 'Failed to generate script', 
+        details: error.message 
+      }),
     };
   }
 };

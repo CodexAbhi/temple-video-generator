@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Temple Video Generator with AI",
   "scripts": {
-    "dev": "netlify dev"
+    "dev": "netlify dev",
+    "build": "echo 'No build step required'"
   },
   "dependencies": {
     "google-spreadsheet": "^4.1.2",
@@ -12,5 +13,8 @@
   },
   "devDependencies": {
     "netlify-cli": "^17.10.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
