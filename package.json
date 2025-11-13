@@ -1,0 +1,15 @@
+{
+  "name": "temple-video-generator",
+  "version": "1.0.0",
+  "description": "Temple Video Generator with AI",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "google-spreadsheet": "^4.1.2",
+    "openai": "^4.20.1"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.10.1"
+  }
+}
