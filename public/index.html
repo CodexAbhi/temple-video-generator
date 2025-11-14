@@ -48,7 +48,7 @@
 
       const fetchLastSerialNumber = async () => {
         try {
-          const response = await fetch('/.netlify/functions/getSerialNumber');
+          const response = await fetch('/.api/getSerialNumber');
           if (!response.ok) {
             throw new Error('Failed to fetch serial number');
           }
@@ -70,7 +70,7 @@
         setError('');
 
         try {
-          const response = await fetch('/.netlify/functions/generateScript', {
+          const response = await fetch('/.api/generateScript', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -114,7 +114,7 @@
           };
 
           // Use Netlify function proxy
-          const response = await fetch('/.netlify/functions/submitToN8n', {
+          const response = await fetch('/.api/submitToN8n', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

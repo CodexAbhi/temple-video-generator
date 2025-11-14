@@ -1,30 +1,24 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
 
-exports.handler = async (event, context) => {
+export default async function handler(req, res) {
   // Enable CORS
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  };
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
   }
 
   try {
     // Validate environment variables
     if (!process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY || !process.env.GOOGLE_SHEET_ID) {
       console.error('Missing environment variables');
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ 
-          error: 'Server configuration error',
-          details: 'Missing required environment variables'
-        }),
-      };
+      return res.status(500).json({ 
+        error: 'Server configuration error',
+        details: 'Missing required environment variables'
+      });
     }
 
     // Handle private key formatting
@@ -94,22 +88,14 @@ exports.handler = async (event, context) => {
     const newSerialNumber = lastSerialNumber + 1;
     console.log('Returning serial number:', newSerialNumber);
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ serialNumber: newSerialNumber }),
-    };
+    return res.status(200).json({ serialNumber: newSerialNumber });
   } catch (error) {
     console.error('Detailed error:', error);
     console.error('Error stack:', error.stack);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ 
-        error: 'Failed to fetch serial number', 
-        details: error.message,
-        stack: error.stack
-      }),
-    };
+    return res.status(500).json({ 
+      error: 'Failed to fetch serial number', 
+      details: error.message,
+      stack: error.stack
+    });
   }
-};
+}
