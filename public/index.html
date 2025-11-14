@@ -113,7 +113,7 @@
             "Video Clips": "pending"
           };
 
-          // Change this URL to use your Netlify function instead
+          // Use Netlify function proxy
           const response = await fetch('/.netlify/functions/submitToN8n', {
             method: 'POST',
             headers: {
@@ -124,16 +124,19 @@
 
           if (response.ok) {
             setSuccess(`Video generation started successfully! Serial No: ${serialNumber}`);
-            setTimeout(() => {
-              setTempleName('');
-              setScript('');
-              setSuccess('');
-            }, 3000);
+            // Don't clear the fields automatically - let user do it manually or start a new entry
           } else {
-            const errorData = await response.json();
-            setError(errorData.error || 'Failed to submit. Please try again.');
+            let errorMsg = 'Failed to submit. Please try again.';
+            try {
+              const errorData = await response.json();
+              errorMsg = errorData.error || errorMsg;
+            } catch (e) {
+              console.error('Could not parse error response');
+            }
+            setError(errorMsg);
           }
         } catch (err) {
+          console.error('Submit error:', err);
           setError(err.message || 'An error occurred. Please try again.');
         } finally {
           setIsSubmitting(false);
