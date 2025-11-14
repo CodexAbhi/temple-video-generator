@@ -28,7 +28,7 @@ exports.handler = async (event, context) => {
     console.log('Forwarding payload to n8n:', payload);
 
     // Forward the request to n8n
-    const response = await fetch('https://thezyra.app.n8n.cloud/webhook-test/videoclips', {
+    const response = await fetch('https://thezyra.app.n8n.cloud/webhook/videoclips', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
