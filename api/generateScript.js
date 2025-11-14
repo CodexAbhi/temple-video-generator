@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     // Validate API key
     if (!process.env.OPENAI_API_KEY) {
       console.error('Missing OpenAI API key');
-      return res.status(500).json({ 
+      return res.status(500).json({
         error: 'Server configuration error',
         details: 'Missing OpenAI API key'
       });
@@ -34,30 +34,41 @@ export default async function handler(req, res) {
       apiKey: process.env.OPENAI_API_KEY,
     });
 
+    // --- New prompt integrated below ---
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
           role: "system",
-          content: "You are a knowledgeable guide who creates engaging, informative scripts about Hindu temples. Focus on history, architecture, spiritual significance, and interesting facts. Keep scripts concise for video format."
+          content: "You are an expert copywriter specializing in short-form video content for social media. Your task is to write an engaging, reel-style storytelling script about a famous Indian temple. Your goal: Create a script that is captivating, informative, and makes the viewer feel like they are learning a hidden story."
         },
         {
           role: "user",
-          content: `Create an engaging 60-90 second video script about ${templeName}. Include its history, significance, architecture, and what makes it special. Make it conversational and suitable for a short video format.`
+          content: `
+Strict Requirements:
+1.  **Format:** The output must be **pure text only**. Do NOT include any scene directions, camera cues, or formatting labels like \`(Scene: ...)\` or \`Script:\`.
+2.  **Tone:** The script must be a **storytelling narrative**. It should be engaging and powerful, not dry or academic. Use strong hooks to grab attention immediately.
+3.  **Content:** You must weave together the temple's primary **legend**, its **historical significance**, and one or two **unique facts** (like its architecture, a famous ritual, or a mystery).
+4.  **Length:** The script must be approximately **100 words**.
+
+Your Task:
+Generate a script for the following temple: ${templeName}
+`
         }
       ],
       temperature: 0.7,
-      max_tokens: 500,
+      max_tokens: 250, // Reduced max_tokens as 100 words is ~200 tokens
     });
+    // --- End of prompt integration ---
 
-    return res.status(200).json({ 
-      script: completion.choices[0].message.content 
+    return res.status(200).json({
+      script: completion.choices[0].message.content
     });
   } catch (error) {
     console.error('Error:', error);
-    return res.status(500).json({ 
-      error: 'Failed to generate script', 
-      details: error.message 
+    return res.status(500).json({
+      error: 'Failed to generate script',
+      details: error.message
     });
   }
 }
