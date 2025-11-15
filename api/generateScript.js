@@ -50,7 +50,7 @@ Strict Requirements:
 2.  **Tone:** The script must be a **storytelling narrative**. It should be engaging and powerful, not dry or academic. Use strong hooks to grab attention immediately.
 3.  **Content:** This must have a scroll stopping hook line, similar to viral instagram reels. You must weave together the temple's primary **legend**, its **historical significance**, and one or two **unique facts** (possible examples- its architecture, a famous ritual, or a mystery. You may choose other unique facts outside these examples based on how viral you think those facts might be if we are posting this on instagram). Always stick to facts, do not make up any fact.
 4.  **Length:** The script must be approximately **100 words**.
-5. **Language:** The Content of the script should be written in Romanian Hindi, i.e. The script should be hindi but written in english script.
+5. **Language:** The Content of the script should be written in Romanian Hindi, i.e. The script should be hindi but written in english script. Keep the english words as english and write the hindi words in romanian hindi.
 
 Your Task:
 Generate a script for the following temple: ${templeName}
