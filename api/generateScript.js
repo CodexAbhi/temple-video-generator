@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       messages: [
         {
           role: "system",
-          content: "You are an expert copywriter specializing in short-form video content for social media. Your task is to write an engaging, reel-style storytelling script about a famous Indian temple. Your goal: Create a script that is captivating, informative, and makes the viewer feel like they are learning a hidden story."
+          content: "You are an expert copywriter specializing in short-form video content for social media. Your task is to write an engaging, reel-style storytelling script about the given Temple. Your goal: Create a script that is captivating, informative, and makes the viewer feel like they are learning a hidden story."
         },
         {
           role: "user",
@@ -50,6 +50,7 @@ Strict Requirements:
 2.  **Tone:** The script must be a **storytelling narrative**. It should be engaging and powerful, not dry or academic. Use strong hooks to grab attention immediately.
 3.  **Content:** You must weave together the temple's primary **legend**, its **historical significance**, and one or two **unique facts** (like its architecture, a famous ritual, or a mystery).
 4.  **Length:** The script must be approximately **100 words**.
+5. **Language:** The Content of the script should be written in Romanian Hindi, i.e. The script should be hindi but written in english script.
 
 Your Task:
 Generate a script for the following temple: ${templeName}
