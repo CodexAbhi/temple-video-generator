@@ -124,6 +124,7 @@
 
           if (response.ok) {
             setSuccess(`Video generation started successfully! Serial No: ${serialNumber}`);
+            setScript('');
             // Don't clear the fields automatically - let user do it manually or start a new entry
           } else {
             let errorMsg = 'Failed to submit. Please try again.';
